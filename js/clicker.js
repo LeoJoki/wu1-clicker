@@ -37,17 +37,17 @@ let active = false; // exempel för att visa att du kan lägga till klass för a
 
 let achievements = [
     {
-        description: 'Museet är redo att öppna, grattis! ',
+        description: 'Slukandet börjar! ',
         requiredUpgrades: 1,
         acquired: false,
     },
     {
-        description: 'Nu börjar det likna något, fortsätt gräva!',
+        description: 'Frosseri Mästare!',
         requiredUpgrades: 10,
         acquired: false,
     },
     {
-        description: 'Klickare, med licens att klicka!',
+        description: 'Flopmeister!',
         requiredClicks: 10,
         acquired: false,
     },
@@ -91,14 +91,17 @@ clickerButton.addEventListener(
  */
 function step(timestamp) {
     moneyTracker.textContent = Math.round(money);
-    mpsTracker.textContent = moneyPerSecond;
+    mpsTracker.textContent = moneyPerSecond/10;
     mpcTracker.textContent = moneyPerClick;
     upgradesTracker.textContent = acquiredUpgrades;
 
-    if (timestamp >= last + 1000) {
-        money += moneyPerSecond;
-        last = timestamp;
-    }
+    // if (timestamp >= last + 1000) {
+    //     money += moneyPerSecond;
+    //     last = timestamp;
+    // }
+
+    money += moneyPerSecond / 1000
+    console.log(money)
 
     if (moneyPerSecond > 0 && !active) {
         mpsTracker.classList.add('active');
@@ -163,24 +166,39 @@ window.addEventListener('load', (event) => {
  */
 upgrades = [
     {
-        name: 'Sop',
+        name: 'Gurka',
         cost: 10,
-        amount: 1,
+        amount: 10,
     },
     {
-        name: 'Kvalitetsspade',
+        name: 'Större Bur',
         cost: 50,
         clicks: 2,
     },
     {
-        name: 'Skottkärra',
+        name: 'Vattenmelon',
         cost: 100,
-        amount: 10,
+        amount: 100,
     },
     {
-        name: 'Grävmaskin',
+        name: 'Hund',
         cost: 1000,
-        amount: 100,
+        amount: 1000,
+    },
+    {
+        name: 'Ännu Större Bur',
+        cost: 5000,
+        clicks: 5,
+    },
+    {
+        name: 'Människa',
+        cost: 10000,
+        amount: 5000,
+    },
+    {
+        name: 'Hus',
+        cost: 50000,
+        amount: 10000,
     },
 ];
 
@@ -209,18 +227,18 @@ function createCard(upgrade) {
     header.classList.add('title');
     const cost = document.createElement('p');
     if (upgrade.amount) {
-        header.textContent = `${upgrade.name}, +${upgrade.amount} per sekund.`;
+        header.textContent = `${upgrade.name}, +${upgrade.amount/10} per sekund.`;
     } else {
         header.textContent = `${upgrade.name}, +${upgrade.clicks} per klick.`;
     }
-    cost.textContent = `Köp för ${upgrade.cost} benbitar.`;
+    cost.textContent = `Köp för ${Math.round(upgrade.cost)} benbitar.`;
 
     card.addEventListener('click', (e) => {
         if (money >= upgrade.cost) {
             acquiredUpgrades++;
             money -= upgrade.cost;
             upgrade.cost *= 1.5;
-            cost.textContent = 'Köp för ' + upgrade.cost + ' benbitar';
+            cost.textContent = 'Köp för ' + Math.round(upgrade.cost) + ' benbitar';
             moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
             moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
             message('Grattis du har köpt en uppgradering!', 'success');

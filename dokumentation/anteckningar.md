@@ -1,0 +1,1 @@
+Jag ogillade att nummrena hoppade upp, så Jens gjorde så att den uppdaterade 60 gånger per sekund sen gångrade jag alla uppgraderingars värdern med 10 så att det såg rätt ut sedan delade jag värdena i uppgraderings meddelandet med 10 så att det såg rätt ut.
